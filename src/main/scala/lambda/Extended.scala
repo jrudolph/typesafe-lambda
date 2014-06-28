@@ -143,6 +143,8 @@ object Extended {
     def create(t: T, r: R): SomeT[T] :: R = ::(SomeT(t), r)
   }
 
+  // THE IMPORTANT TYPE-SAFE CONSTRUCTION PART STARTS HERE //
+
   // The basic expression type for an expression of type T.
   // F denotes an HList of the free variable types.
   sealed trait Exp[F <: HList, T]
@@ -169,6 +171,8 @@ object Extended {
 
   // Function application. Merges free variable lists for both arguments
   def App[T, U, A <: HList, B <: HList](f: Exp[A, T ⇒ U], a: Exp[B, T])(implicit merge: Merge[A, B]): Exp[merge.Res, U] = AppExp(f, a, merge)
+
+  // THE IMPORTANT TYPE-SAFE CONSTRUCTION PART ENDS HERE //
 
   // the actual case classes holding the data used by the above constructors
   case class AddExp[A <: HList, B <: HList, R <: HList](e1: Exp[A, Int], e2: Exp[B, Int], merge: Merge[A, B] { type Res = R }) extends Exp[R, Int]
