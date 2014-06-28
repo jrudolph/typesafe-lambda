@@ -7,3 +7,5 @@ scalaVersion := "2.11.1"
 ScalariformSupport.formatSettings
 
 Revolver.settings
+
+scalacOptions ++= Seq("-unchecked", "-feature")
